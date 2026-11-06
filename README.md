@@ -28,6 +28,17 @@ Download `.appimage` from [latest release](https://github.com/godblessmerica/TKC
 4. **Build mod.**
 5. Press **"Open output"** and move the mod folder imto Recomp's `mods/` folder. Restart is needed fro mods to load.
 
+## Building From Source
+
+Dependencies: [Git](https://git-scm.com/downloads/linux), [Python 3](https://www.python.org/downloads/), and the [.NET 10 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/10.0).
+
+1. Download and extract the source code.
+2. Open a terminal in the extracted folder.
+3. Run `./setup`.
+4. Run `./build-appimage`.
+
+The AppImage will appear in `dist/`.
+
 ## Compatibility
 
 - Currently only **TotK 1.4.3** is supported.
