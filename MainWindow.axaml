@@ -1,0 +1,72 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="MainWindow" Title="TKCL Studio" Width="1030" Height="810"
+        MinWidth="820" MinHeight="650" Background="#141517"
+        WindowStartupLocation="CenterScreen">
+  <Grid RowDefinitions="Auto,*,Auto">
+    <Border Grid.Row="0" BorderBrush="#34373C" BorderThickness="0,0,0,1" Padding="28,16">
+      <Grid ColumnDefinitions="*,Auto">
+        <StackPanel Orientation="Horizontal" Spacing="10">
+          <TextBlock Text="◈" Foreground="#A8C7FA" FontSize="19" VerticalAlignment="Center" />
+          <TextBlock Text="TKCL Studio" FontWeight="Medium" VerticalAlignment="Center" />
+        </StackPanel>
+        <TextBlock Grid.Column="1" Text="LOCAL FILES · NO EMULATOR" Classes="muted" FontSize="11" VerticalAlignment="Center" />
+      </Grid>
+    </Border>
+    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+      <StackPanel Margin="30,20,30,18" Spacing="18">
+        <StackPanel Spacing="7">
+          <TextBlock Text="TOTK RECOMP" Foreground="#A8C7FA" FontSize="11" LetterSpacing="2" />
+          <TextBlock Text="Build your mod." FontSize="30" FontWeight="Medium" />
+          <TextBlock Text="Choose your files. Pick your options. Get a Recomp-ready mod folder." Classes="muted" TextWrapping="Wrap" />
+        </StackPanel>
+        <Grid ColumnDefinitions="3*,28,2*">
+          <StackPanel Name="FilesPanel" Spacing="10">
+            <TextBlock Text="Local files" Classes="section" Margin="0" />
+            <StackPanel><TextBlock Text="Mod package  ·  .tkcl or .zip" Classes="label" />
+              <Grid ColumnDefinitions="*,Auto"><TextBox Name="ModPath" Watermark="Choose a mod package" IsReadOnly="True" /><Button Name="PickMod" Grid.Column="1" Content="Choose" Margin="8,0,0,0" /></Grid>
+            </StackPanel>
+            <StackPanel><TextBlock Text="Base game  ·  .nsp or .xci" Classes="label" />
+              <Grid ColumnDefinitions="*,Auto"><TextBox Name="BasePath" Watermark="Choose your base game" IsReadOnly="True" /><Button Name="PickBase" Grid.Column="1" Content="Choose" Margin="8,0,0,0" /></Grid>
+            </StackPanel>
+            <StackPanel><TextBlock Text="Game update  ·  1.4.3 NSP" Classes="label" />
+              <Grid ColumnDefinitions="*,Auto"><TextBox Name="UpdatePath" Watermark="Choose your game update" IsReadOnly="True" /><Button Name="PickUpdate" Grid.Column="1" Content="Choose" Margin="8,0,0,0" /></Grid>
+            </StackPanel>
+            <StackPanel><TextBlock Text="Production keys  ·  prod.keys" Classes="label" />
+              <Grid ColumnDefinitions="*,Auto"><TextBox Name="ProdPath" Watermark="Choose your production keys" IsReadOnly="True" /><Button Name="PickProd" Grid.Column="1" Content="Choose" Margin="8,0,0,0" /></Grid>
+            </StackPanel>
+            <StackPanel Spacing="5"><TextBlock Text="Title keys  ·  optional" Classes="label" Margin="0" />
+              <Grid ColumnDefinitions="*,Auto,Auto"><TextBox Name="TitlePath" Watermark="Only if your game needs it" IsReadOnly="True" /><Button Name="PickTitle" Grid.Column="1" Content="Choose" Margin="8,0,0,0" /><Button Name="ClearTitle" Grid.Column="2" Content="×" ToolTip.Tip="Clear title keys" Margin="5,0,0,0" AutomationProperties.Name="Clear title keys" /></Grid>
+              <TextBlock Text="Leave empty unless the build reports a missing title key." Classes="muted" FontSize="11" TextWrapping="Wrap" />
+            </StackPanel>
+          </StackPanel>
+          <Border Grid.Column="2" BorderBrush="#34373C" BorderThickness="1,0,0,0" Padding="25,0,0,0">
+            <StackPanel Spacing="12">
+              <TextBlock Text="Mod options" Classes="section" Margin="0" />
+              <TextBlock Name="ModName" Text="Choose a mod to get started" FontSize="18" FontWeight="Medium" TextWrapping="Wrap" />
+              <TextBlock Name="ModDetails" Text="Options are read directly from the package." Classes="muted" FontSize="12" TextWrapping="Wrap" />
+              <StackPanel Name="OptionsPanel" Spacing="12" />
+            </StackPanel>
+          </Border>
+        </Grid>
+        <Expander Name="DetailsExpander" Header="Build details" IsExpanded="False" HorizontalAlignment="Stretch">
+          <TextBox Name="LogBox" IsReadOnly="True" AcceptsReturn="True" TextWrapping="Wrap" MinHeight="90" MaxHeight="170" FontSize="11" />
+        </Expander>
+      </StackPanel>
+    </ScrollViewer>
+    <Border Grid.Row="2" Background="#1D1F22" BorderBrush="#34373C" BorderThickness="0,1,0,0" Padding="30,18,30,23">
+      <StackPanel Spacing="12">
+        <Grid ColumnDefinitions="*,Auto,Auto">
+          <CheckBox Name="RememberPaths" Content="Remember file paths" IsChecked="True" VerticalAlignment="Center" />
+          <Button Name="OpenOutput" Grid.Column="1" Content="Open output" IsVisible="False" Margin="0,0,10,0" VerticalAlignment="Center" />
+          <Button Name="BuildButton" Grid.Column="2" Content="Build Mod" Classes="primary" IsEnabled="False" />
+        </Grid>
+        <Grid ColumnDefinitions="*,Auto">
+          <TextBlock Name="StatusText" Text="Choose a mod package to begin." TextWrapping="Wrap" FontSize="12" Margin="0,0,15,0" />
+          <TextBlock Name="StageText" Grid.Column="1" Text="Ready" Classes="muted" FontSize="12" />
+        </Grid>
+        <ProgressBar Name="BuildProgress" Height="5" Minimum="0" Maximum="4" Value="0" Foreground="#A8C7FA" Background="#141517" ShowProgressText="False" />
+      </StackPanel>
+    </Border>
+  </Grid>
+</Window>

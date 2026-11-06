@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# SPDX-License-Identifier: AGPL-3.0-or-later
+set -euo pipefail
+cd -- "$(dirname -- "$(realpath -- "$0")")"
+source scripts/environment.sh
+"$DOTNET_EXECUTABLE" build TKCLStudio.csproj -c Release --no-restore -m:1 -nr:false \
+  -p:StudioTests=true -p:UseSharedCompilation=false -o "$PWD/.cache/test-bin" -v quiet
+exec "$DOTNET_EXECUTABLE" "$PWD/.cache/test-bin/TKCLStudio.dll" "${@:-self-test}"

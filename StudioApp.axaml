@@ -1,0 +1,24 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="StudioApp">
+  <Application.Resources>
+    <Color x:Key="SystemAccentColor">#A8C7FA</Color>
+    <Color x:Key="SystemAccentColorLight1">#BBD3FB</Color>
+    <Color x:Key="SystemAccentColorDark1">#88ADE8</Color>
+  </Application.Resources>
+  <Application.Styles>
+    <Style Selector="Window">
+      <Setter Property="FontFamily" Value="Inter, Noto Sans, DejaVu Sans" />
+      <Setter Property="FontSize" Value="14" />
+      <Setter Property="Foreground" Value="#F1F1F2" />
+    </Style>
+    <Style Selector="TextBlock.muted"><Setter Property="Foreground" Value="#ADB0B7" /></Style>
+    <Style Selector="TextBlock.label"><Setter Property="FontSize" Value="12" /><Setter Property="Margin" Value="0,0,0,6" /></Style>
+    <Style Selector="TextBlock.section"><Setter Property="FontWeight" Value="Medium" /><Setter Property="Margin" Value="0,0,0,16" /></Style>
+    <Style Selector="Button"><Setter Property="CornerRadius" Value="7" /><Setter Property="Padding" Value="13,8" /><Setter Property="Cursor" Value="Hand" /></Style>
+    <Style Selector="Button.primary"><Setter Property="Background" Value="#A8C7FA" /><Setter Property="Foreground" Value="#101F36" /><Setter Property="FontWeight" Value="Medium" /><Setter Property="Padding" Value="22,12" /></Style>
+    <Style Selector="TextBox"><Setter Property="Background" Value="#1D1F22" /><Setter Property="BorderBrush" Value="#34373C" /><Setter Property="CornerRadius" Value="7" /><Setter Property="Padding" Value="10,8" /></Style>
+    <Style Selector="ComboBox"><Setter Property="HorizontalAlignment" Value="Stretch" /><Setter Property="CornerRadius" Value="7" /></Style>
+    <Style Selector="CheckBox"><Setter Property="FontSize" Value="13" /></Style>
+  </Application.Styles>
+</Application>

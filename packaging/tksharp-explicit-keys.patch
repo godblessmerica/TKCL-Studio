@@ -1,0 +1,41 @@
+diff --git a/Extensions/TkSharp.Extensions.LibHac/TkExtensibleRomConfig.cs b/Extensions/TkSharp.Extensions.LibHac/TkExtensibleRomConfig.cs
+index c90d8da..aef2ec6 100644
+--- a/Extensions/TkSharp.Extensions.LibHac/TkExtensibleRomConfig.cs
++++ b/Extensions/TkSharp.Extensions.LibHac/TkExtensibleRomConfig.cs
+@@ -6,6 +6,7 @@ namespace TkSharp.Extensions.LibHac;
+ 
+ internal struct TkExtensibleRomConfig
+ {
++    public KeySet? ExplicitKeys;
+     public TkExtensibleConfig<string> PreferredVersion = new(TkExtensibleConfigType.None);
+     
+     public TkExtensibleConfig<string> KeysFolder = new(TkExtensibleConfigType.Folder);
+diff --git a/Extensions/TkSharp.Extensions.LibHac/TkExtensibleRomProvider.cs b/Extensions/TkSharp.Extensions.LibHac/TkExtensibleRomProvider.cs
+index d7366d6..d65390d 100644
+--- a/Extensions/TkSharp.Extensions.LibHac/TkExtensibleRomProvider.cs
++++ b/Extensions/TkSharp.Extensions.LibHac/TkExtensibleRomProvider.cs
+@@ -186,6 +186,7 @@ public class TkExtensibleRomProvider : ITkRomProvider
+ 
+     private KeySet? TryGetKeys()
+     {
++        if (_config.ExplicitKeys is { } explicitKeys) return explicitKeys;
+         if (_config.KeysFolder.Get(out var keysFolder)) {
+             TkLog.Instance.LogDebug("[ROM *] Looking for Keys in {KeysFolder}", keysFolder);
+             if (TkKeyUtils.GetKeysFromFolder(keysFolder) is { } keyFromFolder) {
+diff --git a/Extensions/TkSharp.Extensions.LibHac/TkExtensibleRomProviderBuilder.cs b/Extensions/TkSharp.Extensions.LibHac/TkExtensibleRomProviderBuilder.cs
+index 411d352..f001ccb 100644
+--- a/Extensions/TkSharp.Extensions.LibHac/TkExtensibleRomProviderBuilder.cs
++++ b/Extensions/TkSharp.Extensions.LibHac/TkExtensibleRomProviderBuilder.cs
+@@ -23,6 +23,12 @@ public class TkExtensibleRomProviderBuilder
+         return new TkExtensibleRomProviderBuilder(checksums, packFileLookup);
+     }
+     
++    public TkExtensibleRomProviderBuilder WithKeySet(KeySet keys)
++    {
++        _root.ExplicitKeys = keys;
++        return this;
++    }
++
+     public TkExtensibleRomProvider Build()
+     {
+         return new TkExtensibleRomProvider(_root, _checksums, _packFileLookup);

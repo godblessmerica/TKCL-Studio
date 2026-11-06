@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=TKCL Studio
+Comment=Build TKCL mod packages for TotK Recomp using local game files
+Exec=TKCLStudio
+Icon=tkcl-studio
+Categories=Utility;
+Terminal=false
+StartupWMClass=TKCL Studio

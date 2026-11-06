@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+# SPDX-License-Identifier: AGPL-3.0-or-later
+set -euo pipefail
+cd -- "$(dirname -- "$(realpath -- "$0")")"
+source scripts/environment.sh
+mkdir -p dist
+python3 scripts/fetch-runtime.py
+python3 - <<'PY2'
+from pathlib import Path
+import shutil
+publish = Path.cwd() / '.cache/publish'
+assert publish.resolve() == publish
+if publish.exists(): shutil.rmtree(publish)
+PY2
+python3 - <<'PY'
+from pathlib import Path
+root = Path.cwd()
+for name in ('.cache', 'dist'):
+    assert (root / name).resolve() == root / name, 'Build directories must not redirect outside the project.'
+PY
+"$DOTNET_EXECUTABLE" publish TKCLStudio.csproj -c Release -r linux-x64 --self-contained true \
+  -o "$PWD/.cache/publish" -m:1 -nr:false -p:UseSharedCompilation=false -p:DebugType=None -p:DebugSymbols=false -v minimal
+python3 - <<'PY'
+from pathlib import Path
+import shutil
+root = Path.cwd()
+app = root / 'dist/TKCL-Studio.AppDir'
+assert app.resolve() == app and not app.is_symlink()
+if app.exists(): shutil.rmtree(app)
+shutil.copytree(root / '.cache/publish', app / 'usr/bin')
+for name in ('AppRun', 'tkcl-studio.desktop', 'tkcl-studio.png'):
+    shutil.copy2(root / 'packaging' / name, app / name)
+shutil.copy2(root / 'packaging/tkcl-studio.png', app / '.DirIcon')
+for item in [app, *app.rglob('*')]:
+    if item.is_dir(): item.chmod(0o755)
+    elif item.suffix == '.dll': item.chmod(0o644)
+    else: item.chmod(0o755 if item.stat().st_mode & 0o111 else 0o644)
+(app / 'AppRun').chmod(0o755)
+licenses = app / 'usr/share/doc/tkcl-studio'
+licenses.mkdir(parents=True)
+shutil.copy2(root / 'LICENSE', licenses / 'LICENSE')
+shutil.copy2(root / 'THIRD_PARTY.md', licenses / 'THIRD_PARTY.md')
+shutil.copy2(root / 'vendor/TkSharp/License.md', licenses / 'TkSharp-License.md')
+shutil.copy2(root / 'packaging/Uruntime-License.txt', licenses / 'Uruntime-License.txt')
+shutil.copy2(root / 'packaging/README.txt', licenses / 'README.txt')
+PY
+.cache/tools/uruntime-appimage-squashfs-x86_64 --appimage-mksquashfs \
+  dist/TKCL-Studio.AppDir .cache/payload.sqfs -noappend -comp zstd -processors 2 -quiet
+image_file="$(mktemp "$PWD/.cache/TKCL-Studio.XXXXXX")"
+trap 'rm -f -- "$image_file"' EXIT
+cat .cache/tools/uruntime-appimage-squashfs-lite-x86_64 .cache/payload.sqfs > "$image_file"
+chmod +x "$image_file"
+mv -f -- "$image_file" dist/TKCL-Studio-x86_64.AppImage
+sha256sum dist/TKCL-Studio-x86_64.AppImage

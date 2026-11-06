@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+# SPDX-License-Identifier: AGPL-3.0-or-later
+set -euo pipefail
+cd -- "$(dirname -- "$(realpath -- "$0")")"
+source scripts/environment.sh
+tksharp_commit=ee83fb1e70541600fe7a44a376ffe4bd3486f622
+if [[ ! -d vendor/TkSharp ]]; then
+  mkdir -p vendor/TkSharp
+  git -C vendor/TkSharp init -q
+  git -C vendor/TkSharp remote add origin https://github.com/TKMM-Team/TkSharp.git
+  git -C vendor/TkSharp fetch -q --depth 1 origin "$tksharp_commit"
+  git -C vendor/TkSharp checkout -q --detach FETCH_HEAD
+fi
+[[ "$(git -C vendor/TkSharp rev-parse HEAD)" == "$tksharp_commit" ]] || {
+  echo 'Unexpected TkSharp revision; move the existing vendor folder aside and run setup again.' >&2; exit 1;
+}
+if ! git -C vendor/TkSharp apply --reverse --check ../../packaging/tksharp-explicit-keys.patch 2>/dev/null; then
+  git -C vendor/TkSharp apply --check ../../packaging/tksharp-explicit-keys.patch
+  git -C vendor/TkSharp apply ../../packaging/tksharp-explicit-keys.patch
+fi
+"$DOTNET_EXECUTABLE" restore TKCLStudio.csproj -m:1 -nr:false

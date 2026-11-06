@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# SPDX-License-Identifier: AGPL-3.0-or-later
+set -euo pipefail
+cd -- "$(dirname -- "$(realpath -- "$0")")"
+source scripts/environment.sh
+[[ -f vendor/TkSharp/TkSharp/TkSharp.csproj ]] || { echo 'Run ./setup first.' >&2; exit 1; }
+"$DOTNET_EXECUTABLE" build TKCLStudio.csproj -c Release --no-restore -m:1 -nr:false -p:UseSharedCompilation=false -v quiet
+exec "$DOTNET_EXECUTABLE" "$PWD/bin/Release/net10.0/TKCLStudio.dll" "$@"

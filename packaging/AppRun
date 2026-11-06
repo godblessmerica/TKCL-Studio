@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+# SPDX-License-Identifier: AGPL-3.0-or-later
+set -euo pipefail
+app_dir="$(cd -- "$(dirname -- "$(realpath -- "$0")")" && pwd)"
+image_dir="$(dirname -- "${APPIMAGE:-$app_dir}")"
+export TKCL_STUDIO_HOME="${TKCL_STUDIO_HOME:-$image_dir/TKCL-Studio-data}"
+for task_path in "$TKCL_STUDIO_HOME" "$TKCL_STUDIO_HOME/.cache/tmp" "$TKCL_STUDIO_HOME/.cache/xdg" "$TKCL_STUDIO_HOME/.cache/config"; do
+  if [[ "$(realpath -m -- "$task_path")" != "$(realpath -ms -- "$task_path")" ]]; then
+    echo "TKCL Studio data paths must not contain symbolic links." >&2
+    exit 1
+  fi
+done
+mkdir -p "$TKCL_STUDIO_HOME/.cache/tmp" "$TKCL_STUDIO_HOME/.cache/xdg" "$TKCL_STUDIO_HOME/.cache/config"
+export TMPDIR="$TKCL_STUDIO_HOME/.cache/tmp"
+export XDG_CACHE_HOME="$TKCL_STUDIO_HOME/.cache/xdg"
+export XDG_CONFIG_HOME="$TKCL_STUDIO_HOME/.cache/config"
+export DOTNET_EnableDiagnostics=0
+export DOTNET_CLI_TELEMETRY_OPTOUT=1
+cd -- "$TKCL_STUDIO_HOME"
+exec "$app_dir/usr/bin/TKCLStudio" "$@"

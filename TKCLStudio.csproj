@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyName>TKCLStudio</AssemblyName>
+    <Product>TKCL Studio</Product>
+    <Title>TKCL Studio</Title>
+    <OutputType>Exe</OutputType><TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings><Nullable>enable</Nullable>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <AvaloniaNameGeneratorIsEnabled>false</AvaloniaNameGeneratorIsEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(StudioTests)' == 'true'">
+    <DefineConstants>$(DefineConstants);STUDIO_TESTS</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup Condition="'$(StudioTests)' == 'true'">
+    <Compile Include="tests/*.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Program.cs" />
+    <Compile Include="Converter.cs" />
+    <Compile Include="MainWindow.cs" />
+    <Compile Include="AppPaths.cs" />
+    <PackageReference Include="Avalonia.Desktop" Version="11.3.22" />
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="11.3.22" />
+    <ProjectReference Include="vendor/TkSharp/TkSharp/TkSharp.csproj" />
+    <ProjectReference Include="vendor/TkSharp/TkSharp.Data.Embedded/TkSharp.Data.Embedded.csproj" />
+    <ProjectReference Include="vendor/TkSharp/Extensions/TkSharp.Extensions.LibHac/TkSharp.Extensions.LibHac.csproj" />
+    <AvaloniaXaml Remove="vendor/**;.cache/**;dist/**" />
+    <AvaloniaResource Remove="vendor/**;.cache/**;dist/**" />
+  </ItemGroup>
+</Project>
