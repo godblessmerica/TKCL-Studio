@@ -2,6 +2,9 @@
 
 A Linux desktop tool that converts TKCL mod packages into ready-to-use mods for [valentderah’s TotK PC Recomp](https://github.com/valentderah/totk-pc-recomp). Currently only supports Tears of the Kingdom v1.4.3.
 
+<img width="825" height="600" alt="image" src="https://github.com/user-attachments/assets/d7fa7c29-78d5-4f44-a3a4-566fa94fa737" />
+
+
 > [!NOTE]
 > **Compatibility:** TKCL Studio supports only *The Legend of Zelda: Tears of the Kingdom*, game version **1.4.3**, and prepares mods for [**TotK Recomp**](https://github.com/valentderah/totk-pc-recomp). It does not support *Breath of the Wild*, other games, or other TotK game versions. Mod compatibility can vary; a successful conversion does not guarantee that every mod feature will work in Recomp.
 
