@@ -1,6 +1,6 @@
 TKCL Studio — Linux x86_64
 
-Double-click TKCL-Studio-x86_64.AppImage. No .NET installation or emulator is needed.
+Double-click the TKCL Studio AppImage. No .NET installation or emulator is needed.
 
 Choose a TKCL package (or ZIP containing one), your own TotK base NSP/XCI,
 the game 1.4.3 update NSP, and prod.keys. Leave title.keys empty unless needed.

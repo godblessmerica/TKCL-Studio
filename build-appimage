@@ -3,6 +3,16 @@
 set -euo pipefail
 cd -- "$(dirname -- "$(realpath -- "$0")")"
 source scripts/environment.sh
+studio_version="$(python3 - <<'PY'
+import re
+import xml.etree.ElementTree as ET
+version = ET.parse('TKCLStudio.csproj').findtext('./PropertyGroup/Version')
+if not version or not re.fullmatch(r'[0-9]+\.[0-9]+\.[0-9]+(?:-[0-9A-Za-z.-]+)?', version):
+    raise SystemExit('Set a valid Version in TKCLStudio.csproj before building.')
+print(version)
+PY
+)"
+image_name="TKCL-Studio-v${studio_version}-x86_64.AppImage"
 mkdir -p dist
 python3 scripts/fetch-runtime.py
 python3 - <<'PY2'
@@ -50,5 +60,5 @@ image_file="$(mktemp "$PWD/.cache/TKCL-Studio.XXXXXX")"
 trap 'rm -f -- "$image_file"' EXIT
 cat .cache/tools/uruntime-appimage-squashfs-lite-x86_64 .cache/payload.sqfs > "$image_file"
 chmod +x "$image_file"
-mv -f -- "$image_file" dist/TKCL-Studio-x86_64.AppImage
-sha256sum dist/TKCL-Studio-x86_64.AppImage
+mv -f -- "$image_file" "dist/$image_name"
+(cd dist && sha256sum "$image_name") | tee "dist/$image_name.sha256"
