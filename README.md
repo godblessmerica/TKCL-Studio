@@ -6,17 +6,17 @@ A Linux desktop tool that converts TKCL mod packages into ready-to-use mods for 
 > **Compatibility:** TKCL Studio supports only *The Legend of Zelda: Tears of the Kingdom*, game version **1.4.3**, and prepares mods for [**TotK Recomp**](https://github.com/valentderah/totk-pc-recomp). It does not support *Breath of the Wild*, other games, or other TotK game versions. Mod compatibility can vary; a successful conversion does not guarantee that every mod feature will work in Recomp.
 
 > [!IMPORTANT]
-> **TKCL Studio is developed almost entirely using AI.** Its written using [OpenAI’s Codex](https://openai.com/codex/), and directed and tested by a human. The project also uses existing open-source libraries, which retain their own authorship and licenses.
+> **TKCL Studio is developed almost entirely using AI.** It’s written using [OpenAI’s Codex](https://openai.com/codex/), and directed and tested by a human. The project also uses existing open-source libraries, which retain their own authorship and licenses.
 >
-> Please keep discussions on the tool rather than AI. If you disagree with use of AI or don't trust it feel free to not use this tool.
+> Please keep discussions on the tool rather than AI. If you disagree with the use of AI or don't trust it, feel free to not use this tool.
 
 ## Features
 
 - **Clean UI**
 - **Builds `.tkcl` mod packages** into mod folders for TotK Recomp
-- **Remembers file path**, doesnt copy keys, only reads from uploaded.
-- No emulator neededs.
-- No game files, keys or mods are included.
+- **Remembers file paths**, doesn’t copy keys, and only reads your local files.
+- No emulator needed.
+- No game files, keys, or mods are included.
 
 ## System Requirements
 
@@ -29,13 +29,13 @@ The AppImage includes the .NET runtime. Git, Python, and the .NET SDK are only n
 
 ## Usage
 
-Download `.appimage` from [latest release](https://github.com/godblessmerica/TKCL-Studio/releases/latest) and launch it.
+Download the `.AppImage` from the [latest release](https://github.com/godblessmerica/TKCL-Studio/releases/latest) and launch it.
 
-1. Choose a `.tkcl` or `.zip` (must contain only one `.tkcl` file in it)
-2. Choose base game, update, and `prod.keys` and or `title.keys` but `title.keys`  is only necessary if required title key cannot be read from your game package.
+1. Choose a `.tkcl` or `.zip` (must contain only one `.tkcl` file).
+2. Choose the base game, update, and `prod.keys`. Choose `title.keys` only if the required title key cannot be read from your game package.
 3. Select **mod options**.
 4. **Build mod.**
-5. Press **"Open output"** and move the mod folder imto Recomp's `mods/` folder. Restart is needed fro mods to load.
+5. Press **"Open output"** and move the mod folder into Recomp's `mods/` folder. A restart is needed for mods to load.
 
 ## Building From Source
 
@@ -51,7 +51,7 @@ The AppImage will appear in `dist/`.
 ## Compatibility
 
 - Currently only **TotK 1.4.3** is supported.
-- Mods might fail because code patches don't match with TotK Recomp, or mods that require other mods or Switch code plugins, among other unknown things.
+- Mods might fail because their code patches aren’t compatible with TotK Recomp, they require other mods or Switch code plugins, or for other unknown reasons.
 
 ## Credit
 
