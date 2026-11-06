@@ -18,6 +18,15 @@ A Linux desktop tool that converts TKCL mod packages into ready-to-use mods for 
 - No emulator neededs.
 - No game files, keys or mods are included.
 
+## System Requirements
+
+- 64-bit x86_64 Linux.
+- A graphical desktop with X11 or XWayland.
+- Standard system libraries required by .NET and Avalonia.
+- Tested on CachyOS (Arch-based); other distributions haven’t been tested.
+
+The AppImage includes the .NET runtime. Git, Python, and the .NET SDK are only needed when building from source.
+
 ## Usage
 
 Download `.appimage` from [latest release](https://github.com/godblessmerica/TKCL-Studio/releases/latest) and launch it.
